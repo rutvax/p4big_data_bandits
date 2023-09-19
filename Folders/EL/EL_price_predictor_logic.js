@@ -75,15 +75,13 @@ async function predictPrice() {
         })
     });
 
+    // Display the predicted price
     if (response.ok) {
         const response_data = await response.json();
         const predictedPriceElement = document.getElementById('predictedPrice');
         predictedPriceElement.innerText = `Suggested Nightly Rate: $${response_data.predictedPrice}`;
     } else {
         console.error('Error:', response);
-    }    
+    }
     
-    // Display the predicted price
-    // const predictedPriceElement = document.getElementById('predictedPrice');
-    // predictedPriceElement.innerText = `Suggested Nightly Rate: $${data.predictedPrice}`;
 }

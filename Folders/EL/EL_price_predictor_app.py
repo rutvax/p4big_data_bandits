@@ -5,19 +5,16 @@ import joblib
 
 app = Flask(__name__)
 
-# Load the JobLib machine learning model
-model = joblib.load('EL_machine_learning_model.joblib')
-
-# Load the Pickle machine learning model
-# with open('EL_machine_learning_model.pkl', 'rb') as model_file:
-#     model = pickle.load(model_file)
-
 @app.route('/predict', methods=['POST'])
 def predictPrice():
-    input_data = request.json
-
+    # Load the machine learning model
+    model = joblib.load('EL_machine_learning_model.pkl')
+    
+    json_ = request.json
+    print(json_)
+    
     # Process the input data and prepare it for prediction
-    input_df = pd.DataFrame([input_data])
+    input_df = pd.DataFrame([json_])
     preprocessed_df = input_data.copy()
 
     preprocessed_df = pd.get_dummies(preprocessed_df, columns=['room_type', 'bathroom_type', 'neighbourhood_group'], prefix=['room_type', 'bathroom_type', 'neighbourhood'])
@@ -79,9 +76,9 @@ def predictPrice():
     ]
 
     # Make the prediction
-    predicted_price = model.predictPrice([model_input_data])[0]
+    predicted_price = list(model.predict(preprocessed_df))
 
-    return jsonify({'predictedPrice': predicted_price})
+    return jsonify({'data': predicted_price})
 
 if __name__ == '__main__':
     app.run(debug=True)
