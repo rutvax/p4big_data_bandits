@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYC AirBnb Host Price Calculator</title>
+    <script src="EL_price_predictor_logic.js"></script>
+</head>
+<body>
+    <h1>Recommended Nightly Rate for New York City AirBnb Hosts</h1>
+    
+    <!-- Input fields and dropdowns -->
+    <label for="room_type">Room Type:</label>
+    <select id="room_type">
+        <option value="Entire home/apt">Entire home/apt</option>
+        <option value="Private room">Private room</option>
+        <option value="Shared room">Shared room</option>
+    </select><br><br>
+    
+    <label for="accommodates">Accommodates:</label>
+    <input type="number" id="accommodates"><br><br>
+
+    <label for="bedrooms">Bedrooms:</label>
+    <input type="number" id="bedrooms"><br><br>
+
+    <label for="beds">Beds:</label>
+    <input type="number" id="beds"><br><br>
+
+    <label for="bathrooms">Bathrooms:</label>
+    <input type="number" id="bathrooms"><br><br>
+
+    <label for="bathroom_type">Bathroom Type:</label>
+    <select id="bathroom_type">
+        <option value="Private">Private</option>
+        <option value="Shared">Shared</option>
+    </select><br><br>
+
+    <label for="neighbourhood">Borough:</label>
+    <select id="neighbourhood">
+        <option value="Brooklyn">Brooklyn</option>
+        <option value="Manhattan">Manhattan</option>
+        <option value="Queens">Queens</option>
+    </select><br><br>
+
+    <label for="amenities">Amenities:</label><br>
+    <input type="checkbox" id="wifi" value="wifi">Wifi<br>
+    <input type="checkbox" id="smoke_alarm" value="smoke_alarm">Smoke alarm<br>
+    <input type="checkbox" id="carbon_monoxide_alarm" value="Carbon monoxide alarm">Carbon monoxide alarm<br>
+    <input type="checkbox" id="kitchen" value="kitchen">Kitchen<br>
+    <input type="checkbox" id="air_conditioning" value="air_conditioning">Air conditioning<br>
+    <input type="checkbox" id="tv" value="tv">TV<br>
+    <input type="checkbox" id="iron" value="iron">Iron<br>
+    <input type="checkbox" id="essentials" value="essentials">Essentials<br>
+    <input type="checkbox" id="hangers" value="hangers">Hangers<br>
+    <input type="checkbox" id="shampoo" value="shampoo">Shampoo<br>
+    <input type="checkbox" id="refrigerator" value="refrigerator">Refrigerator<br>
+    <input type="checkbox" id="hair_dryer" value="hair_dryer">Hair dryer<br>
+    <input type="checkbox" id="hot_water" value="hot_water">Hot water<br>
+    <input type="checkbox" id="cooking_basics" value="cooking_basics">Cooking basics<br>
+    <input type="checkbox" id="heating" value="heating">Heating<br>
+    <input type="checkbox" id="bed_linens" value="bed_linens">Bed linens<br>
+    <input type="checkbox" id="microwave" value="microwave">Microwave<br>
+    <input type="checkbox" id="oven" value="oven">Oven<br>
+    <input type="checkbox" id="fire_extinguisher" value="fire_extinguisher">Fire extinguisher<br>
+    <input type="checkbox" id="coffee_maker" value="coffee_maker">Coffee maker<br>
+    <input type="checkbox" id="free_street_parking" value="free_street_parking">Free street parking<br>
+    <input type="checkbox" id="first_aid_kit" value="first_aid_kit">First aid kit<br>
+    <input type="checkbox" id="self_check_in" value="self_check_in">Self check-in<br>
+    <input type="checkbox" id="dedicated_workspace" value="dedicated_workspace">Dedicated workspace<br>
+
+    <br><br>
+
+    <button onclick="predictPrice()">Get Nightly Rate</button><br><br>
+
+    <!-- Display the predicted price -->
+    <div id="predictedPrice"></div>
+
+    <!-- Include the JavaScript file -->
+    <script src="EL_price_predictor_logic.js"></script>
+</body>
+</html>
