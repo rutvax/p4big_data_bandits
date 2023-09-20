@@ -42,6 +42,9 @@ Unfortunately, since too much time was spent training a model with the goal to r
 
 Rutva Korat - :
 ...
+Tableau Dashboard:
+    https://public.tableau.com/views/P4DashboardFinal/P4dashboard?:language=en-US&:display_count=n&:origin=viz_share_link
+
 
 Natural Language Processing
 	
