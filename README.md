@@ -33,9 +33,9 @@ We hosted the website using Microsoft Azure. We also deployed a flask app so tha
 ## Visualizations
 ...
 
-# Analysis Ownership
+## Analysis Ownership
 
-## Elena Lucherini - Host Price Predictor:
+### Elena Lucherini - Host Price Predictor:
 Host Price Predictor
 
 Using a simple machine learning model, I developed a calculator that will suggest a nightly rate to someone looking to host their New York City property on AirBnb. The price predictor takes in inputs such as the property's borough, the number of people accommodated, and relevant property features and amenities.
@@ -58,12 +58,14 @@ Attempt #2 - My second attempt included using eight layers, all still relu, and 
 
 Attempt #3 - In my third attempt I went back to 5 layers and 100 epochs, but incorporated tanh into three of those layers. But unfortunately, I only got to a 0.50 R-squared value. 
 
-## Andrea Paredes - ML Model Implementation and Optimization:
+### Andrea Paredes - ML Model Implementation and Optimization:
 Using clean merged data I selected 4 features that I believed would be the most relevant to train my model. After encoding and making sure all columns formats were correct, I started experimenting and got bad results from initial models, with 0.13 R-squared score.
+
 Added Linear Regression and later Random Forest Regression. The Random Forest gave me a 0.81 R-squared score. Having this as my base, I moved to train a neural network model that initially improved very little with a 0.23 R-squared. After adding many new feature columns, layers and neurons the best score I was able to reach was 0.78 R-squared.
+
 Unfortunately, since too much time was spent training a model with the goal to reach at least 0.80 R-squared, I was not able to work on deploying the model to our website.
 
-## Rutva Korat - :
+### Rutva Korat - NLP and Sentiment Analysis:
 Tableau Dashboard:
     https://public.tableau.com/views/P4DashboardFinal/P4dashboard?:language=en-US&:display_count=n&:origin=viz_share_link
 
@@ -80,7 +82,7 @@ This could be because the more expensive AirBnb’s get, they could have better 
 
 
 
-## Adam Nguyen - :
+### Adam Nguyen - :
 
 
 ...
