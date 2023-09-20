@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host Price Predictor</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 22px; 
+        }
+
+        select {
+            font-size: 0.9em; 
+        }
+
+        button {
+            font-size: 1.1em; 
+        }
+
+        .text-wrapper {
+            max-width: 1600px; 
+        }
+
+        .enlarged-image {
+            width: 1000px; 
+            height: auto; 
+        }
+
+        .whole_number {
+            font-size: 0.9em;;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Recommended Nightly Rate for New York City AirBnb Hosts</h1>
+    
+    <form id="inputForm" method="POST">
+        
+        <!-- Input fields and dropdowns -->
+        <label for="room_type">Room Type:</label>
+        <select id="room_type">
+            <option value="Entire home/apt">Entire home/apt</option>
+            <option value="Private room">Private room</option>
+            <option value="Shared room">Shared room</option>
+        </select><br><br>
+        
+        <label for="accommodates">Accommodates:</label>
+        <input class="whole_number" type="number" id="accommodates"><br><br>
+
+        <label for="bedrooms">Bedrooms:</label>
+        <input class="whole_number" type="number" id="bedrooms"><br><br>
+
+        <label for="beds">Beds:</label>
+        <input class="whole_number" type="number" id="beds"><br><br>
+
+        <label for="bathrooms">Bathrooms:</label>
+        <input class="whole_number" type="number" id="bathrooms"><br><br>
+
+        <label for="bathroom_type">Bathroom Type:</label>
+        <select id="bathroom_type">
+            <option value="Private">Private</option>
+            <option value="Shared">Shared</option>
+        </select><br><br>
+
+        <label for="neighbourhood">Borough:</label>
+        <select id="neighbourhood">
+            <option value="Brooklyn">Brooklyn</option>
+            <option value="Manhattan">Manhattan</option>
+            <option value="Queens">Queens</option>
+        </select><br><br>
+
+        <label for="amenities">Amenities:</label><br>
+        <input type="checkbox" id="wifi" value="wifi">Wifi<br>
+        <input type="checkbox" id="smoke_alarm" value="smoke_alarm">Smoke alarm<br>
+        <input type="checkbox" id="carbon_monoxide_alarm" value="Carbon monoxide alarm">Carbon monoxide alarm<br>
+        <input type="checkbox" id="kitchen" value="kitchen">Kitchen<br>
+        <input type="checkbox" id="air_conditioning" value="air_conditioning">Air conditioning<br>
+        <input type="checkbox" id="tv" value="tv">TV<br>
+        <input type="checkbox" id="iron" value="iron">Iron<br>
+        <input type="checkbox" id="essentials" value="essentials">Essentials<br>
+        <input type="checkbox" id="hangers" value="hangers">Hangers<br>
+        <input type="checkbox" id="shampoo" value="shampoo">Shampoo<br>
+        <input type="checkbox" id="refrigerator" value="refrigerator">Refrigerator<br>
+        <input type="checkbox" id="hair_dryer" value="hair_dryer">Hair dryer<br>
+        <input type="checkbox" id="dishes_and_silverware" value="dishes_and_silverware">Dishes and silverare<br>
+        <input type="checkbox" id="hot_water" value="hot_water">Hot water<br>
+        <input type="checkbox" id="cooking_basics" value="cooking_basics">Cooking basics<br>
+        <input type="checkbox" id="heating" value="heating">Heating<br>
+        <input type="checkbox" id="bed_linens" value="bed_linens">Bed linens<br>
+        <input type="checkbox" id="microwave" value="microwave">Microwave<br>
+        <input type="checkbox" id="oven" value="oven">Oven<br>
+        <input type="checkbox" id="fire_extinguisher" value="fire_extinguisher">Fire extinguisher<br>
+        <input type="checkbox" id="coffee_maker" value="coffee_maker">Coffee maker<br>
+        <input type="checkbox" id="free_street_parking" value="free_street_parking">Free street parking<br>
+        <input type="checkbox" id="first_aid_kit" value="first_aid_kit">First aid kit<br>
+        <input type="checkbox" id="self_check_in" value="self_check_in">Self check-in<br>
+        <input type="checkbox" id="dedicated_workspace" value="dedicated_workspace">Dedicated workspace<br>
+
+        <br><br>
+
+        <button id="get_nightly_rate">Get Nightly Rate</button><br><br>
+    
+    </form>
+
+    <div id="predictionResult" style="display: none;">
+        <span style="font-size: larger; font-weight: bold; color: #00A699;">Suggested nightly rate:</span> <span style="font-size: larger; font-weight: bold; color: #FF5A5F;" id="predictionValue"></span>
+    </div>
+    
+
+    <br><br><br><br>
+
+    <!-- ------------------------------------------------------------------------------------------------------------------- -->
+
+    <h2>Machine Learning Methodology</h2>
+    <h3>Linear Regression Output</h3>
+    <div class="text-wrapper">
+        <p>
+            Using the cleaned data from Google Colab, specifically with the top 25 amenities columns, I started with a linear regression, specifically because I wanted to train a model based on price against other many other factors. We found the R-squared value (which ideally should be above 0.8) to be 0.45 - not great.
+        </p>
+    </div>
+    <img class="enlarged-image" src="Images/price_predictor_1.jpg">
+    <br>
+    <br>
+    <h3>Neural Network Outputs</h3>
+    <div class="text-wrapper">
+        <p>
+            Wanting and needing to try a different approach, I moved on to TensorFlow and a neural network deep learning model. I tried three approaches to get the R-squared value above 0.8, but ultimately had to settle for the approach that brought me closest but was still below 0.8.
+        </p>
+    </div>
+    <h4>Attempt #1</h4>
+    <div class="text-wrapper">
+        <p>
+            My first neural network approach was to use five Keras layers, all relu, and 100 epochs. The resulting R-squared value was 0.54, which was better than the linear regression's output of 0.45, but still not ideal.
+        </p>
+    </div>
+    <img class="enlarged-image" src="Images/price_predictor_2.jpg">
+    <br>
+    <img class="enlarged-image" src="Images/price_predictor_3.jpg">
+    <br>
+    <img class="enlarged-image" src="Images/price_predictor_4.jpg">
+    <br><br>
+    <h4>Attempt #2</h4>
+    <div class="text-wrapper">
+        <p>
+            My second attempt included using eight layers, all still relu, and 150 epochs. Unfortunately, I think I overtrained the model, since the R-squared value declined back down to 0.47. Definitely scrapped that approach.
+        </p>
+    </div>
+    <img class="enlarged-image" src="Images/price_predictor_5.jpg">
+    <br>
+    <img class="enlarged-image" src="Images/price_predictor_6.jpg">
+    <br>
+    <img class="enlarged-image" src="Images/price_predictor_7.jpg">
+    <br><br>
+    <h4>Attempt #3</h4>
+    <div class="text-wrapper">
+        <p>
+            In my third attempt I went back to 5 layers and 100 epochs, but incorporated tanh into three of those layers. But unfortunately, I only got to a 0.50 R-squared value. So I choose to save the first neural network model, as it had the highest R-squared value of the four models.
+        </p>
+    </div>
+    <img class="enlarged-image" src="Images/price_predictor_8.jpg">
+    <br>
+    <img class="enlarged-image" src="Images/price_predictor_9.jpg">
+    <br>
+    <img class="enlarged-image" src="Images/price_predictor_10.jpg">
+
+
+
+    <!-- Include the JavaScript file -->
+    <script src="/Folders/EL/EL_price_predictor_logic.js"></script>
+
+</body>
+</html>

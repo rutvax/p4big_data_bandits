@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <meta charset="UTF-8">
+    <title>Top 5 Airbnb Listings Finder</title>
+
+    <style>
+ 
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+        h1 {
+            background-color: #3fb3a9;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            
+            font-weight: bold;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3fb3a9;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3fb3a9;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        #map {
+            height: 400px;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Find Your Ideal Airbnb</h1>
+<div style="padding: 20px;"></div>
+<form id="search-form">
+    <!-- Dropdown for Borough -->
+    <label for="neighbourhood_group_cleansed">Select Borough:</label>
+    <select id="neighbourhood_group_cleansed" onchange="updateNeighborhoods()">
+        <option value="">--Please choose an option--</option>
+        <option value="Queens">Queens</option>
+        <option value="Brooklyn">Brooklyn</option>
+        <option value="Manhattan">Manhattan</option>
+    </select>
+    <br>
+
+    <!-- Dropdown for Neighborhood -->
+    <label for="neighbourhood">Select Neighborhood:</label>
+    <select id="neighbourhood">
+        <!-- This will be populated by JavaScript -->
+    </select>
+    <br>
+
+    <!-- Dropdown for Room Type -->
+    <label for="room_type">Select Room Type:</label>
+    <select id="room_type">
+        <option value="">--Please choose an option--</option>
+        <option value="Entire home/apt">Entire home/apt</option>
+        <option value="Private room">Private room</option>
+        <option value="Shared room">Shared room</option>
+        <option value="Hotel room">Hotel room</option>
+    </select>
+    <br>
+
+    <!-- Dropdown for Accommodates -->
+    <label for="accommodates">Accommodates:</label>
+    <select id="accommodates">
+        <option value="">--Please choose an option--</option>
+        <option value="1-4">1-4</option>
+        <option value="5-8">5-8</option>
+        <option value="9+">9+</option>
+    </select>
+    <br>
+
+    <!-- Checkbox for Bathroom Type -->
+    <label>Bathroom Type:</label>
+    <input type="checkbox" id="bathroom_type_private" value="Private">
+    <label for="bathroom_type_private">Private</label>
+    <input type="checkbox" id="bathroom_type_shared" value="Shared">
+    <label for="bathroom_type_shared">Shared</label>
+    <br>
+
+    <!-- Checkbox for Amenities Type -->
+    <label>Amenities:</label>
+    <input type="checkbox" id="Wifi" value="Wifi">
+    <label for="Wifi">Wifi</label>
+    <input type="checkbox" id="Kitchen" value="Kitchen">
+    <label for="Kitchen">Kitchen</label>
+    <input type="checkbox" id="Air conditioning" value="Air conditioning">
+    <label for="Air conditioning">Air conditioning</label>
+    <br>
+
+    
+    <button type="submit">Search</button>
+</form>
+</div>
+<!-- Container to display results -->
+<div id="results" style="padding: 20px;"></div>
+<div id="map"></div>
+<script>
+// Function to fetch listings from API
+async function fetchListings() {
+    try {
+        const response = await fetch("https://flaskappbdbs.azurewebsites.net/api/BigDataBandits/amenities");
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Fetch failed:', error);
+    }
+}
+
+// Function to update neighborhood dropdown
+function updateNeighborhoods() {
+    const borough = document.getElementById('neighbourhood_group_cleansed').value;
+    const neighborhoodDropdown = document.getElementById('neighbourhood');
+
+    // Clear previous options
+    neighborhoodDropdown.innerHTML = '';
+
+    let neighborhoods = [];
+
+    if (borough === 'Brooklyn') {
+        neighborhoods = ['East Flatbush', 'East New York', 'Prospect-Lefferts Gardens', 'Borough Park', 'Cypress Hills', 'Bensonhurst', 'Brighton Beach', 'Bedford-Stuyvesant', 'Brownsville', 'Bay Ridge', 'Crown Heights', 'Canarsie', 'Park Slope', 'Sunset Park', 'Kensington', 'Windsor Terrace', 'Sheepshead Bay', 'Red Hook', 'Bushwick', 'Bergen Beach', 'Midwood', 'Flatbush', 'Prospect Heights', 'Williamsburg', 'Gowanus', 'Gravesend', 'Fort Hamilton', 'Fort Greene', 'Dyker Heights', 'Bath Beach', 'Flatlands', 'Clinton Hill', 'Greenpoint', 'Coney Island', 'Manhattan Beach', 'Sea Gate', 'South Slope', 'Mill Basin', 'Gerritsen Beach', 'Cobble Hill', 'Carroll Gardens', 'Boerum Hill', 'DUMBO', 'Brooklyn Heights', 'Vinegar Hill', 'Columbia St', 'Downtown Brooklyn', 'Navy Yard'];
+    }
+
+    if (borough === 'Manhattan') {
+        neighborhoods = ['Upper East Side', 'Washington Heights', 'Tribeca', 'Midtown', 'Murray Hill', 'Battery Park City', 'Financial District', 'Flatiron District', 'Kips Bay', 'Hell\'s Kitchen', 'Inwood', 'Stuyvesant Town', 'Lower East Side', 'Morningside Heights', 'Harlem', 'Two Bridges', 'Upper West Side', 'East Harlem', 'Nolita', 'Chinatown', 'East Village', 'Chelsea', 'SoHo', 'Gramercy', 'Greenwich Village', 'West Village', 'Marble Hill', 'Little Italy', 'Theater District', 'Roosevelt Island', 'Civic Center', 'NoHo'];
+    }
+
+    if (borough === 'Queens') {
+        neighborhoods = ['East Elmhurst', 'Middle Village', 'Ridgewood', 'Ozone Park', 'Jamaica', 'Woodhaven', 'St. Albans', 'Flushing', 'Arverne', 'Richmond Hill', 'Springfield Gardens', 'Belle Harbor', 'Kew Gardens Hills', 'Briarwood', 'Rego Park', 'Corona', 'Jackson Heights', 'Queens Village', 'South Ozone Park', 'Long Island City', 'Ditmars Steinway', 'Bellerose', 'Forest Hills', 'Howard Beach', 'Far Rockaway', 'Kew Gardens', 'Rosedale', 'Rockaway Beach', 'Glendale', 'Neponsit', 'Laurelton', 'Whitestone', 'Bayside', 'Jamaica Estates', 'Douglaston', 'Astoria', 'Woodside', 'Elmhurst', 'Sunnyside', 'Cambria Heights', 'Jamaica Hills', 'Maspeth', 'Edgemere', 'Hollis', 'College Point', 'Bay Terrace', 'Fresh Meadows', 'Bayswater', 'Holliswood', 'Little Neck', 'Breezy Point'];
+    }
+
+    // Populate the neighborhood dropdown
+    neighborhoods.forEach((neighborhood) => {
+        const option = document.createElement('option');
+        option.value = neighborhood;
+        option.innerText = neighborhood;
+        neighborhoodDropdown.appendChild(option);
+    });
+    }
+
+// Function to get user input from the form
+function getUserInput() {
+    const borough = document.getElementById('neighbourhood_group_cleansed').value;
+    const neighborhood = document.getElementById('neighbourhood').value;
+    const roomType = document.getElementById('room_type').value;
+    const accommodates = document.getElementById('accommodates').value;
+    // Use ternary operators to convert true/false to 1/0
+    const privateBathroom = document.getElementById('bathroom_type_private').checked ? 1 : 0;
+    const sharedBathroom = document.getElementById('bathroom_type_shared').checked ? 1 : 0;
+    // Use ternary operators to convert true/false to 1/0
+    const Wifi = document.getElementById('Wifi').checked ? 1 : 0;
+    const Kitchen = document.getElementById('Kitchen').checked ? 1 : 0;
+    const Airconditioning = document.getElementById('Air conditioning').checked ? 1 : 0;
+
+
+
+
+    return {
+        borough,
+        neighborhood,
+        roomType,
+        accommodates,
+        privateBathroom,
+        sharedBathroom,
+        Wifi,
+        Kitchen,
+        Airconditioning
+    };
+}
+
+function findTopListings(listings, userInput) {
+    // Filter listings based on user input
+    const filteredListings = listings.filter(listing => {
+        const {
+            room_type,
+            accommodates,
+            neighbourhood,
+            neighbourhood_group_cleansed,
+        } = listing;
+
+        let match = true;
+
+        // Check if room type matches
+        if (userInput.roomType && room_type !== userInput.roomType) match = false;
+
+        // Check if accommodates matches
+        let accommodatesCondition = false;
+        if (userInput.accommodates === '1-4' && accommodates <= 4) accommodatesCondition = true;
+        if (userInput.accommodates === '5-8' && accommodates >= 5 && accommodates <= 8) accommodatesCondition = true;
+        if (userInput.accommodates === '9+' && accommodates >= 9) accommodatesCondition = true;
+
+        if (!accommodatesCondition) match = false;
+
+        // Check if neighbourhood matches
+        if (userInput.neighborhood && neighbourhood !== userInput.neighborhood) match = false;
+
+        // Check if neighbourhood_group_cleansed matches
+        if (userInput.borough && neighbourhood_group_cleansed !== userInput.borough) match = false;
+        
+
+        return match;
+    });
+
+    return filteredListings.slice(0, 5);
+}
+
+
+
+// Add an event listener to the form
+document.getElementById('search-form').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = '';  // Clear previous results
+
+    console.log("Form submitted");
+
+    // Get user input from the form
+    const userInput = getUserInput();
+    console.log("User input:", userInput);
+
+    // Fetch listings from API
+    const listings = await fetchListings();
+
+    // Find top 5 listings based on user input
+    const top5Listings = findTopListings(listings, userInput);
+
+    if (top5Listings && top5Listings.length > 0) {
+    top5Listings.forEach((listing, index) => {
+        const resultElement = document.createElement('div');
+        resultElement.innerHTML = `<h2>Listing ${index + 1}</h2><p><a href="${listing.listing_url}" target="_blank">${listing.listing_url}</a></p>`;
+        resultsContainer.appendChild(resultElement);
+    });
+} else {
+    resultsContainer.innerHTML = '<p>No listings found based on your criteria.</p>';
+}
+
+
+});
+</script>
+<div id="map" style="height: 400px;"></div>
+</body>
+</html>

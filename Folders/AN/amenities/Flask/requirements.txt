@@ -1,0 +1,5 @@
+flask
+numpy
+sqlalchemy
+flask_cors
+pandas
