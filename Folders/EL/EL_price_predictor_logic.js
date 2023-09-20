@@ -1,6 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Add an event listener to the button
-    document.getElementById('get_nightly_rate').addEventListener('click', function() {
+document.getElementById('inputForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+        // Log a message to the console
+        console.log('Button clicked!');
         // Gather the input values
         var room_type = document.getElementById('room_type').value;
         var accommodates = parseInt(document.getElementById('accommodates').value);
@@ -34,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var first_aid_kit = document.getElementById('first_aid_kit').checked ? 1 : 0;
         var self_check_in = document.getElementById('self_check_in').checked ? 1 : 0;
         var dedicated_workspace = document.getElementById('dedicated_workspace').checked ? 1 : 0;
-        });
 
         // Call your function with the gathered inputs
         var inputData = {
@@ -73,28 +73,56 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         
         // Call the function to send input data for prediction
-        predictNightlyRate(inputData);    
+        predictNightlyRate(inputData)
+        .then(data => {
+            console.log("Response from server:", data);
+            
+            if ('prediction' in data) {
+                const prediction = parseFloat(data.prediction);
+                
+                if (!isNaN(prediction)) {
+                    console.log("Suggested Nightly Rate:", prediction);
+                    const roundedPrediction = Math.round(prediction); // Round to nearest whole number
+                    const formattedPrediction = `$${roundedPrediction}`; // Add dollar sign
 
-        // Display prediction on the page
-        console.log("Suggested Nightly Rate:", inputData);
+                    // Update the predictionValue element
+                    document.getElementById('predictionValue').textContent = formattedPrediction;
+
+                    // Show the predictionResult element
+                    document.getElementById('predictionResult').style.display = 'block';
+
+                } else {
+                    console.error('Error: Invalid prediction value');
+                }
+            } else {
+                console.error('Error: No prediction in response');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 });
 
 // Function to send input data to the server for prediction
 function predictNightlyRate(inputData) {
-    // Send a POST request to the server
-    fetch('http://127.0.0.1:5000', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(inputData),
+    return fetch('http://127.0.0.1:12345/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(inputData),
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Suggested Nightly Rate:', data.predicted_rate);
+        console.log("Response from server:", data);
+
+        if (typeof data.prediction === 'string') {
+            data.prediction = JSON.parse(data.prediction);
+        }
+
+        return data;
     })
     .catch(error => {
         console.error('Error:', error);
     });
-
 }
