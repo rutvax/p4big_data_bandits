@@ -76,7 +76,7 @@ This could be because the more expensive AirBnb’s get, they could have better 
 
 
 
-### Adam Nguyen - : 
+### Adam Nguyen - Data Cleaning and Website Construction/Hosting: 
 For data cleaning, we utilized pyspark with Google colab. We filtered each dataframe down to Mahattan, Queens, and Brooklyn for neighbourhood_group_cleansed after pulling in the data from data.insideairbnb.com. 
 
 From there we went further and cleaned the data down to just isting_id , listing_url , name , room_type , accommodates , bedrooms , beds , bathrooms , neighbourhood , neighbourhood_group_cleansed , longitude , latitude , price , Wifi , Smoke alarm , Carbon monoxide alarm , Kitchen , Air conditioning , TV , Iron , Essentials , Hangers , Shampoo , Refrigerator , Hair dryer , Dishes and silverware , Hot water , Cooking basics , Heating , Bed linens , Microwave , Oven , Fire extinguisher , Coffee maker , Free street parking , First aid kit , Self check-in , Dedicated workspace , review_scores_rating , bathroom_type_private , bathroom_type_shared to upload into a Flask app. 
