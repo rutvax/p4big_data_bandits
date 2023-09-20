@@ -11,16 +11,20 @@ Link to website: https://bigdatabandits2.z5.web.core.windows.net/
 
 Data and Delivery
 We started with three CSV files from the source (http://insideairbnb.com/get-the-data/), specifically about New York City.
-	- Listings.csv.gz
- 	- Reviews.csv.gz
-  	- Calendars.csv.gz
+
+- Listings.csv.gz
+- Reviews.csv.gz
+- Calendars.csv.gz
+
 Out of these three original files, calendars contained 15.9M rows of data, reviews contained 1.1M rows, and listings contained 44K rows.
 We cleaned this data down by removing null values from all three files.
 We used pyspark to read the data into Google Colab
+
 The three dataframes we cleaned down to 
-	- Listings - 39,453 rows
- 	- Reviews - 1,019,573 rows
-  	- Calendar - 14,399,996 rows
+
+- Listings - 39,453 rows
+- Reviews - 1,019,573 rows
+- Calendar - 14,399,996 rows
 
 We hosted the website using Microsoft Azure. We also deployed a flask app so that we can reference project 3 and json data for project 4.
 
