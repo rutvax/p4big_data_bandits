@@ -37,6 +37,7 @@ We hosted the website using Microsoft Azure. We also deployed a flask app so tha
 
 ## Elena Lucherini - Host Price Predictor:
 Host Price Predictor
+
 Using a simple machine learning model, I developed a calculator that will suggest a nightly rate to someone looking to host their New York City property on AirBnb. The price predictor takes in inputs such as the property's borough, the number of people accommodated, and relevant property features and amenities.
 
 Please note that the Host Price Predictor is not hosted on the Azure site. To open it, within this GitHub repository, go to Folders/EL:
@@ -44,13 +45,18 @@ Please note that the Host Price Predictor is not hosted on the Azure site. To op
 -	Then open EL_price_predictor_index.html in a Live Server. 
 
 Machine Learning
-I made four attempts to optimize my simple machine learning model, before selecting the best approach of the four so I could move on to build the price predictor. 
+
+I made four attempts to optimize my simple machine learning model, before selecting the best approach of the four so I could move on to build the price predictor. I chose to save the first Keras neural network model as a .h5 file, as it had the highest R-squared value of the four models. In a real work scenario (and with more time), I would have utilized Andrea’s random forest regressor model, since it produced a much better R-squared value.
+
 Linear Regression Model: Using the cleaned data from Google Colab, specifically with the top 25 amenities columns, I started with a linear regression, specifically because I wanted to train a model based on price against many other factors. We found the R-squared value (which ideally should be above 0.8) to be 0.45 - not great.
+
 Neural Network Keras Model: Wanting and needing to try a different approach, I moved on to TensorFlow and a neural network deep learning model. I tried three approaches to get the R-squared value above 0.8, but ultimately I had to settle for the approach that brought me closest but was still below 0.8.
+
 Attempt #1 - My first neural network approach was to use five Keras layers, all relu, and 100 epochs. The resulting R-squared value was 0.54, which was better than the linear regression's output of 0.45, but still not ideal. 
+
 Attempt #2 - My second attempt included using eight layers, all still relu, and 150 epochs. Unfortunately, I think I overtrained the model, since the R-squared value declined back down to 0.47.
+
 Attempt #3 - In my third attempt I went back to 5 layers and 100 epochs, but incorporated tanh into three of those layers. But unfortunately, I only got to a 0.50 R-squared value. 
-Final choice - I chose to save the first neural network model as a .h5 file, as it had the highest R-squared value of the four models. In a real work scenario (and with more time), I would have utilized Andrea’s random forest regressor model, since it produced a much better R-squared value.
 
 ## Andrea Paredes - ML Model Implementation and Optimization:
 Using clean merged data I selected 4 features that I believed would be the most relevant to train my model. After encoding and making sure all columns formats were correct, I started experimenting and got bad results from initial models, with 0.13 R-squared score.
