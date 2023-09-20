@@ -22,7 +22,7 @@ We used pyspark to read the data into Google Colab
 
 The three dataframes we cleaned down to 
 
-- Listings - 39,453 rows
+- Listings - 27,343 rows
 - Reviews - 1,019,573 rows
 - Calendar - 14,399,996 rows
 
