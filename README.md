@@ -22,15 +22,12 @@ The three dataframes we cleaned down to
 - Reviews - 1,019,573 rows
 - Calendar - 14,399,996 rows
 
-We hosted the website using Microsoft Azure. We also deployed a flask app so that we can reference project 3 and json data for project 4.
+
 
 ## Back End
-...
+We hosted the website using Microsoft Azure. We also deployed a flask app so that we can reference project 3 and json data for project 4.
 
-## Visualizations
-...
-
-## Analysis Ownership
+## Ownership
 
 ### Elena Lucherini - Host Price Predictor:
 Host Price Predictor
@@ -79,7 +76,15 @@ This could be because the more expensive AirBnb’s get, they could have better 
 
 
 
-### Adam Nguyen - :
+### Adam Nguyen - : 
+For data cleaning, we utilized pyspark with Google colab. We filtered each dataframe down to Mahattan, Queens, and Brooklyn for neighbourhood_group_cleansed after pulling in the data from data.insideairbnb.com. 
+
+From there we went further and cleaned the data down to just isting_id , listing_url , name , room_type , accommodates , bedrooms , beds , bathrooms , neighbourhood , neighbourhood_group_cleansed , longitude , latitude , price , Wifi , Smoke alarm , Carbon monoxide alarm , Kitchen , Air conditioning , TV , Iron , Essentials , Hangers , Shampoo , Refrigerator , Hair dryer , Dishes and silverware , Hot water , Cooking basics , Heating , Bed linens , Microwave , Oven , Fire extinguisher , Coffee maker , Free street parking , First aid kit , Self check-in , Dedicated workspace , review_scores_rating , bathroom_type_private , bathroom_type_shared to upload into a Flask app. 
+
+With the Find Your Ideal Airbnb tab on the website. The input will be pushed in comparisson of the Flask app in as a query and returns up to 5 Airbnb links that match the criteria. 
+
+I was tasked with finding a way to host the website and went with Azure for both Flask app deployment and web storage for the static website.
+For the website, we worked on uploading the previous Flask app to host our previous sqlite server so project 3 can be hosted online as well. We also utilized the storage account to host our files so that it can work correctly online.
 
 
 ...
